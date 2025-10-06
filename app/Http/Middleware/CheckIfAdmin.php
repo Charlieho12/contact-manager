@@ -12,12 +12,6 @@ class CheckIfAdmin
     }
 
     private function respondToUnauthorizedRequest($request)
-    private function checkIfUserIsAdmin($user)
-    {
-        return true;
-    }
-
-    private function respondToUnauthorizedRequest($request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             return response(trans('backpack::base.unauthorized'), 401);
