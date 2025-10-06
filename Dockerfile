@@ -18,8 +18,11 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Set permissions for storage, cache, and database
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
+RUN chmod -R ug+rw /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/database
+RUN touch /var/www/html/database/database.sqlite && chown www-data:www-data /var/www/html/database/database.sqlite && chmod 664 /var/www/html/database/database.sqlite
 
 
 # Set Apache DocumentRoot to /var/www/html/public
