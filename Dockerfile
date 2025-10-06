@@ -33,8 +33,10 @@ RUN apt-get update && apt-get install -y nodejs npm
 RUN npm install
 RUN npm run build
 
-# Run migrations on build
+
+# Run migrations and seed admin user on build
 RUN php artisan migrate --force
+RUN php artisan db:seed --force
 
 
 # Publish Backpack assets for admin panel styling
