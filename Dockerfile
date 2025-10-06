@@ -21,9 +21,16 @@ RUN composer install --no-dev --optimize-autoloader
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+
 # Set Apache DocumentRoot to /var/www/html/public
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
+# Install Node.js and npm, then build frontend assets (Vite)
+RUN apt-get update && apt-get install -y nodejs npm
+RUN npm install
+RUN npm run build
+
+# Run migrations on build
 RUN php artisan migrate --force
 
 # Expose port 80
