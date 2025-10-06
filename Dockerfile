@@ -33,8 +33,12 @@ RUN npm run build
 # Run migrations on build
 RUN php artisan migrate --force
 
+
 # Publish Backpack assets for admin panel styling
 RUN php artisan vendor:publish --provider="Backpack\\Base\\BackpackBaseServiceProvider" --tag=public --force
+
+# Create storage symlink for asset loading
+RUN php artisan storage:link
 
 # Expose port 80
 EXPOSE 80
