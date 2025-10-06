@@ -10,9 +10,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Create a default admin user for production
+        \App\Models\User::updateOrCreate(
+            [ 'email' => 'admin@admin.com' ],
+            [
+                'name' => 'Admin',
+                'password' => bcrypt('admin123'),
+            ]
+        );
     }
 }
